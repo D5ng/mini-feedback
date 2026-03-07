@@ -16,6 +16,7 @@
     "*.controller.ts": "typescript",
     "*.repository.ts": "typescript",
     "*.module.ts": "typescript",
-    "*.guard.ts": "typescript"
+    "*.guard.ts": "typescript",
+    "*.interceptor.ts": "typescript"
   }
 }
