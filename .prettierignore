@@ -1,0 +1,9 @@
+"dist",
+"node_modules",
+"build",
+"coverage",
+"*.json",
+"*.txt",
+"*.yaml",
+"*.yml"
+"src/migrations"
