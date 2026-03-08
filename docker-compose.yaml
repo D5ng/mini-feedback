@@ -40,7 +40,7 @@ services:
       DB_PORT: ${DB_PORT}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
-      DB_DATABASE: ${DB_DATABASE_NAME}
+      DB_DATABASE: ${DB_DATABASE}
     command: pnpm run start:dev
     restart: unless-stopped
     volumes:
