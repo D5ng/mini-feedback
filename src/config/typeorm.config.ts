@@ -12,7 +12,7 @@ const config: TypeOrmModuleOptions = {
   entities: ['dist/**/**/*.entity{.ts,.js}'],
   migrations: ['dist/migrations/*{.ts,.js}'],
   autoLoadEntities: true,
-  synchronize: false,
+  synchronize: process.env.NODE_ENV === 'development' ? true : false,
 }
 
 export default registerAs('typeorm', () => config)
