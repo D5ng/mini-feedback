@@ -22,13 +22,16 @@
   - **Linux (Ubuntu 기준 예시)**
     - 공식 문서: [Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
     - 간단 예시:
+
       ```bash
       sudo apt-get update
       sudo apt-get install -y docker.io docker-compose-plugin
       sudo usermod -aG docker "$USER"
       # 그룹 반영을 위해 재로그인 또는 재부팅 필요
       ```
+
   - 설치 후 아래 명령으로 정상 설치 여부를 확인할 수 있습니다.
+
     ```bash
     docker --version
     docker compose version
@@ -72,10 +75,13 @@ JWT_REFRESH_SECRET=your-refresh-secret
 Docker를 통해 DB + API 서버를 한 번에 띄울 수 있습니다.
 
 ```bash
-# 백그라운드 실행
+# 1) 백그라운드 실행 (가장 간단)
 pnpm docker:dev:up
 
-# 또는 직접 명령어 사용
+# 2) 코드 변경을 자동으로 반영하며 실행 (개발용)
+pnpm docker:dev:watch
+
+# 3) 또는 직접 명령어 사용
 docker compose --env-file .env -f docker-compose.yaml up -d --build
 ```
 
@@ -88,6 +94,10 @@ docker compose --env-file .env -f docker-compose.yaml up -d --build
 ```bash
 pnpm docker:dev:down
 ```
+
+> Swagger 문서(`http://localhost:8080/docs`)는 **컨테이너 안의 앱만 떠 있으면** 바로 접근 가능합니다.  
+> 즉, 단순히 문서를 보고 간단히 호출만 해볼 때는 `pnpm docker:dev:up` 만으로 충분하고,  
+> 코드 변경을 자주 반영하면서 개발할 때는 `pnpm docker:dev:watch`를 사용하면 됩니다.
 
 ## 4. Swagger 문서 확인 방법
 
@@ -123,43 +133,3 @@ pnpm docker:dev:down
   - `GET /users/:userId/feedbacks?viewerId=...` – 특정 유저에 대한 피드백 목록 조회 (인증 필요)
 
 프론트엔드는 위 엔드포인트를 기반으로 호출하면 되고, 상세 스키마와 예시는 Swagger UI에서 확인할 수 있습니다.
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-pnpm install -g @nestjs/mau
-mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
