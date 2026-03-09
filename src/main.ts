@@ -29,7 +29,7 @@ async function bootstrap() {
     .build()
 
   const swaggerDocument = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('swagger-ui', app, swaggerDocument)
+  SwaggerModule.setup('swagger', app, swaggerDocument)
 
   app.useGlobalInterceptors(new BaseResponseInterceptor())
   app.useGlobalFilters(new GlobalExceptionFilter())
