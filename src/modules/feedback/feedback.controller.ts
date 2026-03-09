@@ -6,7 +6,7 @@ import { CreateFeedbackDto } from './dto/create-feedback.dto'
 import { FeedbackService } from './feedback.service'
 
 @ApiTags('피드백')
-@Controller('feedbacks')
+@Controller('users/:userId/feedbacks')
 export class FeedbackController {
   constructor(private readonly feedbackService: FeedbackService) {}
 
@@ -20,21 +20,29 @@ export class FeedbackController {
   @ApiCreatedResponse({
     description: '피드백이 정상적으로 생성되었습니다.',
   })
-  async createFeedback(@Req() req: Request & { user: JwtPayload }, @Body() createFeedbackDto: CreateFeedbackDto) {
+  @ApiParam({
+    name: 'userId',
+    description: '피드백을 받을 유저의 ID입니다.',
+  })
+  async createFeedback(
+    @Req() req: Request & { user: JwtPayload },
+    @Param('userId', ParseUUIDPipe) userId: string,
+    @Body() createFeedbackDto: CreateFeedbackDto,
+  ) {
     const senderId = req.user.id
-    return this.feedbackService.leaveFeedback(senderId, createFeedbackDto)
+    return this.feedbackService.leaveFeedback(senderId, userId, createFeedbackDto)
   }
 
   @UseGuards(AccessTokenGuard)
-  @Get('profile/:targetUserId')
+  @Get('')
   @ApiBearerAuth()
   @ApiOperation({
-    summary: '프로필 피드백 조회',
-    description: '특정 유저 프로필에 대한 피드백 목록을 조회합니다.',
+    summary: '유저 피드백 조회',
+    description: '특정 유저에 대한 피드백 목록을 조회합니다.',
   })
   @ApiParam({
-    name: 'targetUserId',
-    description: '피드백을 조회할 프로필 유저의 ID입니다.',
+    name: 'userId',
+    description: '피드백을 조회할 유저의 ID입니다.',
   })
   @ApiQuery({
     name: 'viewerId',
@@ -44,10 +52,7 @@ export class FeedbackController {
   @ApiOkResponse({
     description: '피드백 목록이 정상적으로 반환되었습니다.',
   })
-  async getProfileFeedbacks(
-    @Param('targetUserId', ParseUUIDPipe) targetUserId: string,
-    @Query('viewerId', ParseUUIDPipe) viewerId?: string,
-  ) {
-    return this.feedbackService.getFeedbackList(targetUserId, viewerId)
+  async getProfileFeedbacks(@Param('userId', ParseUUIDPipe) userId: string, @Query('viewerId', ParseUUIDPipe) viewerId?: string) {
+    return this.feedbackService.getFeedbackList(userId, viewerId)
   }
 }

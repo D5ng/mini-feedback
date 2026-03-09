@@ -25,12 +25,4 @@ export class CreateFeedbackDto {
   })
   @IsBoolean({ message: '공개 여부는 불리언 값이어야 합니다.' })
   isPublic: boolean = true
-
-  @ApiProperty({
-    example: 'a3b7f1a0-2e4a-4a3d-9c1c-5f3e2d1b0c9f',
-    description: '피드백을 받는 유저의 ID입니다.',
-    format: 'uuid',
-  })
-  @IsNotEmpty({ message: '수신자 ID는 필수 입력 항목입니다.' })
-  receiverId: string
 }

@@ -11,8 +11,8 @@ export class FeedbackService {
     private readonly feedbackRepository: Repository<Feedback>,
   ) {}
 
-  async leaveFeedback(senderId: string, createFeedbackDto: CreateFeedbackDto) {
-    const { title, content, receiverId, isPublic } = createFeedbackDto
+  async leaveFeedback(senderId: string, receiverId: string, createFeedbackDto: CreateFeedbackDto) {
+    const { title, content, isPublic } = createFeedbackDto
 
     if (senderId === receiverId) {
       throw new BadRequestException('본인에게는 피드백을 남길 수 없습니다.')
