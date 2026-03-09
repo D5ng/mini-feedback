@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { Feedback } from '../feedback/feedback.entity'
 
 @Entity()
 export class User {
@@ -16,6 +17,12 @@ export class User {
 
   @Column({ nullable: true, type: 'varchar' })
   refreshToken?: string | null
+
+  @OneToMany(() => Feedback, (feedback) => feedback.sender)
+  sentFeedbacks: Feedback[]
+
+  @OneToMany(() => Feedback, (feedback) => feedback.receiver)
+  receivedFeedbacks: Feedback[]
 
   @Column({ nullable: false, type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date
