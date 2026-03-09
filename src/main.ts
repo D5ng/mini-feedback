@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core'
+import cookieParser from 'cookie-parser'
 import { Logger } from 'nestjs-pino'
 import { AppModule } from './app.module'
 import { GlobalExceptionFilter } from './filters/global-exception-filter'
@@ -10,6 +11,7 @@ async function bootstrap() {
     bufferLogs: true,
   })
 
+  app.use(cookieParser())
   app.useLogger(app.get(Logger))
 
   app.useGlobalInterceptors(new BaseResponseInterceptor())
